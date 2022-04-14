@@ -1,0 +1,186 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --blue-gradient: linear-gradient(to right, #0072ff, #00c6ff);
+    --grey-gradient: linear-gradient(to right, #29323c, #485563);
+    --alt-blue-gradient: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+    --blue-shadow: box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+    --white-greyish-color: #D6D9DC;
+    --error-color: #ff0033;
+    --valid-color: #00ff6a;
+}
+
+body {
+    font-family: 'Alegreya Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    background: var(--blue-gradient);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.browser-form-header,
+.browser-form {
+    width: min(80%, 37.5rem);
+    background: var(--grey-gradient);
+    color: white;
+    border-radius: .5rem;
+}
+
+.browser-form-header {
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 1rem;
+    margin-top: 1.5rem;
+}
+
+.browser-form {
+    padding: 2.125rem 1.15rem;
+    margin-top: 2.5rem;
+}
+
+.form-row {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: column wrap;
+    gap: .3rem;
+    padding: .85rem;
+}
+
+.form-row select {
+    width: 100%;
+    font-size: 1rem;
+    padding: .75rem .75rem;
+    border: 0;
+    border-radius: .18rem;
+    background-color: var(--white-greyish-color);
+}
+
+.form-row .custom-select {
+    position: relative;
+}
+
+.form-row .custom-select .custom-down-arrow {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #29323c;
+    width: 4rem;
+    border-radius: .15rem;
+    pointer-events: none;
+    /* place the icon to the center vertically and horizontally */
+    display: grid;
+    place-items: center;
+}
+
+.form-row button {
+    padding: .5rem 1rem;
+    border-radius: .25rem;
+    border: 0;
+    background-color: #0072ff;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    position: relative;
+}
+
+.form-row button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    border: 2px solid #0072ff;
+    border-radius: inherit;
+    transition: top, right, bottom, left, 200ms ease-in-out;
+}
+
+.form-row button:hover::before,
+.form-row button:focus::before {
+    z-index: 1;
+    top: calc(2px * -2);
+    right: calc(2px * -2);
+    bottom: calc(2px * -2);
+    left: calc(2px * -2);
+}
+
+/* Form input styling and validation */
+.form-row input[type="text"],
+.form-row input[type="email"],
+.form-row input[type="password"] {
+    width: 100%;
+    background-color: var(--white-greyish-color);
+    border: 0;
+    border-radius: .15rem;
+    padding: .75rem .75rem .75rem 2rem;
+}
+
+.form-row input[type="text"]:required:valid,
+.form-row input[type="email"]:required:valid,
+.form-row input[type="password"]:required:valid {
+    background: url(images/sign-check.svg);
+    background-size: 1.35rem;
+    background-repeat: no-repeat;
+    background-position: .3rem .55rem;
+    background-color: var(--white-greyish-color);
+    outline: 2px solid var(--valid-color);
+}
+
+/* neat trick to know if the field is not empty is checking if there is no placeholder being shown */
+.form-row input[type="text"]:required:invalid:not(:focus):not(:placeholder-shown),
+.form-row input[type="email"]:required:invalid:not(:focus):not(:placeholder-shown),
+.form-row input[type="password"]:required:invalid:not(:focus):not(:placeholder-shown) {
+    outline: 2px solid var(--error-color);
+    background: url(images/sign-error.svg);
+    background-size: 1.35rem;
+    background-repeat: no-repeat;
+    background-position: .3rem .55rem;
+    background-color: var(--white-greyish-color);
+}
+
+.form-row input[type="text"]:required:invalid:focus:not(:placeholder-shown),
+.form-row input[type="email"]:required:invalid:focus:not(:placeholder-shown),
+.form-row input[type="password"]:required:invalid:focus:not(:placeholder-shown) {
+    background: url(images/sign-error.svg);
+    background-size: 1.35rem;
+    background-repeat: no-repeat;
+    background-position: .3rem .55rem;
+    background-color: white;
+}
+
+/* error-message is not displayed by default, hence max-height value is 0 */
+.form-row .error-message {
+    color: var(--error-color);
+    font-style: italic;
+    overflow: hidden;
+    max-height: 0;
+    transform: translateY(-8px);
+    transition: 200ms;
+}
+
+/* display the error message below the field by setting a max height value */
+.form-row input[type="text"]:required:invalid:not(:focus):not(:placeholder-shown) ~ .error-message,
+.form-row input[type="email"]:required:invalid:not(:focus):not(:placeholder-shown) ~ .error-message,
+.form-row input[type="password"]:required:invalid:not(:focus):not(:placeholder-shown) ~ .error-message,
+.form-row .error-message.active {
+    max-height: 12.5rem;
+    padding: 0 1rem 0 1rem;
+    transform: translateY(0);
+}
+
+.form-row input[type="text"]:required:focus,
+.form-row input[type="email"]:required:focus,
+.form-row input[type="password"]:required:focus,
+.form-row select:focus {
+    outline: 0;
+    background-color: white;
+}
