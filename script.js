@@ -6,19 +6,24 @@ const startsWithVowel = (str) => {
 const checkPasswordsMatch = () => {
     const password = document.querySelector('#passw');
     const confirmPassw = document.querySelector('#confirmPassw');
-
+    
     if (confirmPassw.value !== password.value) {
         // when not matching with the other password input turn this input invalid to trigger css styling
         return confirmPassw.setCustomValidity('Invalid');
     }
 
+    // when customValidity is set to an empty string it means the input is valid
     return confirmPassw.setCustomValidity('');
 };
 
 const handleValidationOnInput = (field, fieldLabel, fieldErrorMessage) => {
-    if (field.id === 'confirmPassw' || field.id === 'passw') {
+    if (field.id === 'passw') {
+        return fieldErrorMessage.textContent = 'Password must be at least 8 characters, contain 1 uppercase letter, 1 lowercase letter and 1 number';
+    }
+
+    if (field.id === 'confirmPassw') {
         checkPasswordsMatch();
-        return fieldErrorMessage.textContent = `The two password fields must match`;
+        return fieldErrorMessage.textContent = 'The two password fields must match';
     } 
 
     return fieldErrorMessage.textContent = `Please enter a valid ${fieldLabel}`;

@@ -300,15 +300,18 @@
                 Password
                 <abbr title="required" aria-label="required">*</abbr>
             </label>
-            <input type="password" name="passw" id="passw" placeholder=" " required>
-            <div class="error-message"></div>
+            <input type="password" name="passw" id="passw" placeholder=" "
+                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" required>
+            <div class="error-message">Password must be at least 8 characters, contain 1 uppercase letter, 1 lowercase
+                letter and 1 number</div>
         </div>
         <div class="form-row">
             <label for="confirmPassw">
                 Confirm Password
                 <abbr title="required" aria-label="required">*</abbr>
             </label>
-            <input type="password" name="confirmPassw" id="confirmPassw" placeholder=" " required>
+            <input type="password" name="confirmPassw" id="confirmPassw" placeholder=" "
+                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" required>
             <div class="error-message">The two password fields must match</div>
         </div>
         <div class="form-row">
